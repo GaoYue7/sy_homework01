@@ -1,2 +1,3 @@
-# sy_homework01
-嵌入式系统GIT作业
+# 嵌入式Git作业
+v1：基础HelloWorld
+v2：新增input键盘输入功能
