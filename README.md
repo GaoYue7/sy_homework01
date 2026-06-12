@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # 嵌入式系统作业1
 
 ## 实验说明
@@ -15,3 +16,16 @@ int main() {
     printf("Hello, World!\n");
     return 0;
 }
+=======
+# 第一次作业 ex01-hello-world
+## 目录结构
+- ex01/hello.c - C语言HelloWorld程序
+- ex01/main.py - Python输入输出程序
+
+## 编译运行
+### C语言
+```bash
+cd ex01
+gcc hello.c -o hello
+./hello
+>>>>>>> c93e23105a14c0e22753a7fe0b776c482602fa55
