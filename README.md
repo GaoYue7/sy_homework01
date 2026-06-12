@@ -6,26 +6,33 @@
 
 ---
 
-## ex01/hello.c 版本迭代记录
+---
 
-### 版本1（第一次提交）
-基础HelloWorld程序，仅实现控制台输出固定字符串。
-```c
-#include <stdio.h>
-int main() {
-    printf("Hello, World!\n");
-    return 0;
-}
-=======
-# 第一次作业 ex01-hello-world
-## 目录结构
-- ex01/hello.c - C语言HelloWorld程序
-- ex01/main.py - Python输入输出程序
-
-## 编译运行
-### C语言
+### 对应的完整Git命令（和前面步骤对应）
 ```bash
-cd ex01
-gcc hello.c -o hello
-./hello
->>>>>>> c93e23105a14c0e22753a7fe0b776c482602fa55
+# 步骤1：拉取仓库
+cd ~/Desktop/sy_homework01
+git pull origin main
+
+# 步骤2：新建lab01文件夹
+mkdir lab01
+mkdir lab01/src
+mkdir lab01/results
+
+# 步骤3：把实验代码放进lab01/src，截图放进lab01/results，然后更新README.md为上面的模板
+
+# 步骤4：第一次add（添加代码和更新后的README）
+git add lab01/src/
+git add README.md
+
+# 步骤5：第一次commit
+git commit -m "lab01: 完成实验1代码与README更新"
+
+# 步骤6：添加实验截图
+git add lab01/results/
+
+# 步骤7：第二次commit
+git commit -m "lab01: 补充实验运行结果截图"
+
+# 步骤8：推送到GitHub
+git push origin main
