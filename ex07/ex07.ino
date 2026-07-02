@@ -1,9 +1,9 @@
 #include <WiFi.h>
 #include <WebServer.h>
 
-// WiFi配置
-const char* ssid = "我要和你豹了";
-const char* password = "liuzihan2006";
+// AP热点配置
+const char* ap_ssid = "ESP32-LAB";
+const char* ap_pass = "12345678"; // 密码至少8位
 
 // 硬件配置
 const int ledPin = 2;
@@ -20,7 +20,7 @@ const char* html = R"HTML(
 <body>
     <h1>ESP32 无极调光器</h1>
     <input type="range" min="0" max="255" id="slider" oninput="sendBrightness(this.value)">
-    <p>亮度: <span id="val">0</span></p >
+    <p>亮度: <span id="val">0</span></p>
 
     <script>
         function sendBrightness(b) {
@@ -53,16 +53,15 @@ void setup() {
     pinMode(ledPin, OUTPUT);
     analogWrite(ledPin, 0);
 
-    WiFi.begin(ssid, password);
-    Serial.print("正在连接WiFi");
-    while (WiFi.status() != WL_CONNECTED) {
-        delay(500);
-        Serial.print("."); 
-    }
+    // 开启AP热点模式
+    WiFi.mode(WIFI_AP);
+    WiFi.softAP(ap_ssid, ap_pass);
 
-    Serial.println("\nWiFi连接成功!");
-    Serial.print("ESP32的IP地址是:");
-    Serial.println(WiFi.localIP()); 
+    Serial.println("AP热点已开启");
+    Serial.print("热点名称: ");
+    Serial.println(ap_ssid);
+    Serial.print("访问地址: http://");
+    Serial.println(WiFi.softAPIP()); // 默认IP 192.168.4.1
 
     server.on("/", handleRoot);
     server.on("/set", handleSet);

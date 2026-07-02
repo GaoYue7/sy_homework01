@@ -1,8 +1,9 @@
 #include <WiFi.h>
 #include <WebServer.h>
 
-const char* ssid = "HANNAH";
-const char* password = "liuzihan2006";
+// AP热点配置
+const char* ap_ssid = "ESP32-LAB";
+const char* ap_pass = "12345678"; // 密码至少8位
 
 #define TOUCH_PIN 4
 const int ledPin = 2;
@@ -40,7 +41,7 @@ const char* htmlPage = R"HTML(
 <body>
     <h1>ESP32 触摸传感器实时仪表盘</h1>
     <div class="dashboard" id="sensorValue">--</div>
-    <p class="tip">手靠近引脚数值变小，离开恢复</p >
+    <p class="tip">手靠近引脚数值变小，离开恢复</p>
 
     <script>
         function updateSensor() {
@@ -72,15 +73,15 @@ void setup() {
     pinMode(ledPin, OUTPUT);
     digitalWrite(ledPin, LOW);
 
-    WiFi.begin(ssid, password);
-    Serial.print("正在连接WiFi");
-    while (WiFi.status() != WL_CONNECTED) {
-        delay(500);
-        Serial.print(".");
-    }
-    Serial.println("\nWiFi连接成功!");
-    Serial.print("ESP32 IP地址: ");
-    Serial.println(WiFi.localIP());
+    // 开启AP热点模式
+    WiFi.mode(WIFI_AP);
+    WiFi.softAP(ap_ssid, ap_pass);
+
+    Serial.println("AP热点已开启");
+    Serial.print("热点名称: ");
+    Serial.println(ap_ssid);
+    Serial.print("ESP32 IP地址: http://");
+    Serial.println(WiFi.softAPIP()); // 默认IP 192.168.4.1
 
     server.on("/", handleRoot);
     server.on("/sensor", handleSensor);

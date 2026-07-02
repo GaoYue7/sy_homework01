@@ -7,9 +7,9 @@
 // 触摸引脚 T0 对应 GPIO4
 #define TOUCH_PIN 4
 
-// ===================== WiFi配置 =====================
-const char* ssid = "lyx";
-const char* password = "yyuan777";
+// ===================== AP热点配置 =====================
+const char* ap_ssid = "ESP32-LAB";
+const char* ap_pass = "12345678"; // 密码至少8位
 
 // ===================== 系统状态变量 =====================
 // 布防状态：true=已布防，false=已撤防
@@ -95,29 +95,15 @@ void setup() {
   pinMode(LED_PIN, OUTPUT);
   digitalWrite(LED_PIN, LOW);
 
-  // ===================== 连接WiFi =====================
-WiFi.begin(ssid, password);
-Serial.print("正在连接WiFi: ");
-Serial.println(ssid);
+  // ===================== 开启AP热点 =====================
+  WiFi.mode(WIFI_AP);
+  WiFi.softAP(ap_ssid, ap_pass);
 
-// 增加超时机制，避免无限等待
-unsigned long startAttemptTime = millis();
-while (WiFi.status() != WL_CONNECTED && millis() - startAttemptTime < 15000) { // 15秒超时
-  delay(500);
-  Serial.print(".");
-}
-
-if (WiFi.status() == WL_CONNECTED) {
-  Serial.println("\n✅ WiFi连接成功！");
-  Serial.print("📶 信号强度: ");
-  Serial.println(WiFi.RSSI());
+  Serial.println("AP热点已开启");
+  Serial.print("热点名称: ");
+  Serial.println(ap_ssid);
   Serial.print("🌐 访问地址: http://");
-  Serial.println(WiFi.localIP());
-} else {
-  Serial.println("\n❌ WiFi连接超时！请检查热点/密码");
-  // 连接失败后重启ESP32，自动重试
-  ESP.restart();
-}
+  Serial.println(WiFi.softAPIP()); // 默认IP 192.168.4.1
 
   // ===================== 绑定Web路由 =====================
   server.on("/", handleRoot);
